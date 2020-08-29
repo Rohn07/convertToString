@@ -31,6 +31,9 @@ public class ConvertToWords {
 		
 		String result2 = "Sixty Two Thousand Four Hundred and Fifty Six 56/100 ONLY";
 		assertEquals(result2, ConvertToString.convertToWords(62456.56));
+
+		String result3 = "One Lakh Sixty Two Thousand Four Hundred and Fifty Six 56/100 ONLY";
+		assertEquals(result3, ConvertToString.convertToWords(162456.56));
 	}
 
 }

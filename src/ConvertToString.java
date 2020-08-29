@@ -1,81 +1,88 @@
 import java.util.Scanner;
 public class ConvertToString {
-	
+    // declaring array for the 1 to 19 number.
 	static String one[] = { "", "One ", "Two ", "Three ", "Four ", "Five ", 
     		"Six ", "Seven ", "Eight ",  "Nine ", "Ten ", 
     		"Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", 
-    		"Sixteen ", "Seventeen ", "Eighteen ", "Nineteen " }; 
-  
-     
+            "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen " }; 
+            
+    // declaring array for value of tens.
     static String ten[] = { "", "", "Twenty ", "Thirty ", "Forty ", 
                             "Fifty ", "Sixty ", "Seventy ", "Eighty ", 
                             "Ninety " }; 
   
-     
-    static String numToWords(int n, String s) 
+    // function to handle the double digit number.
+    // function take input for a number and additional string.
+    // additional string will store the text.
+    static String numToWords(int number, String suffix) 
     { 
-        String str = ""; 
-        if (n > 19) 
+        String strngOut = ""; 
+        if (number > 19) 
         { 
-            str += ten[n / 10] + one[n % 10]; 
+            strngOut += ten[number / 10] + one[number % 10]; 
         } 
         else 
         { 
-            str += one[n]; 
+            strngOut += one[number]; 
         } 
          
-        if (n != 0) { 
-            str += s; 
+        if (number != 0) { 
+            strngOut += suffix; 
         } 
-        return str; 
+        return strngOut; 
     }
     
-    static String convertToWords(double d) 
+    // function will convert and number to words.
+    static String convertToWords(double input) 
     {      
-    	String out = "";
-        String s = String.valueOf(d);
+        String out = "";
         String temp = "";
-        String [] splitted = s.split("\\.");
+
+        String s = String.valueOf(input); // converting the input to string from double.
+        
+        String [] splitted = s.split("\\."); // splitting the string to find dot(.)
 		for (String strTemp : splitted)
 		{
-			  if(strTemp.matches("0"))
-              {
-              temp=strTemp.replaceAll("0","Only");
-
-              }
-              else {
-                  temp = strTemp.concat("/100 ONLY");
-              }
+			if(strTemp.matches("0") )
+            {
+                temp = strTemp.replaceAll("0","Only");
+            }
+            else 
+            {
+                temp = strTemp.concat("/100 ONLY");
+            }
 		}
 		
-        out += numToWords((int)((d / 100000) % 100), "Lakh ");         
-        out += numToWords((int)((d / 1000) % 100), "Thousand ");          
-        out += numToWords((int)((d / 100) % 10), "Hundred "); 
-        if (d > 100 && d % 100 > 0) 
+        out += numToWords((int)((input / 100000) % 100), "Lakh ");  // function call       
+        out += numToWords((int)((input / 1000) % 100), "Thousand ");          
+        out += numToWords((int)((input / 100) % 10), "Hundred "); 
+        if (input > 100 && input % 100 > 0) 
         { 
             out += "and "; 
         } 
-        out += numToWords((int)(d % 100), "");
-        out+=temp;
+        out += numToWords((int)(input % 100), "");
+        out += temp;
         return out; 
     }
 
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
-		double n1 = sc.nextDouble();
-		sc.close();
-		String n=String.valueOf(n1); // string convert
-        int in=0;
-        if(n.matches(".0")) 
+		double input_number = sc.nextDouble(); // taking a user input
+        sc.close();
+        
+		String n = String.valueOf(input_number);  // converting it to a string
+        
+        int wholeNumber = 0;
+
+        if(n.matches (".0") ) // if a number does not contain a decimal value
         {
-            in=(int)n1; // 
-            System.out.println("Rs."+convertToWords(in));
-
+            wholeNumber = (int)input_number; 
+            System.out.println("Rs."+ convertToWords(wholeNumber) ); // function call
         }
-        else {
-
-            System.out.println("Rs." + convertToWords(n1));
+        else 
+        {
+            System.out.println("Rs." + convertToWords(input_number) ); // function call
         }
 	}
 }
